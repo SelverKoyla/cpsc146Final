@@ -16,6 +16,6 @@ int main()
 				
 	} while (inputDone);
 	
-
+system ("PAUSE");
 	return 0;
 }
