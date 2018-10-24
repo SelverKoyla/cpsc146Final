@@ -26,7 +26,8 @@ int main()
 		
 		
 		//checks for last 5 as numbers
-		for (int i = 1; i <= static_cast<int>(ID.length() - 1); i++){
+		for (int i = 1; i <= static_cast<int>(ID.length() - 1); i++)
+		{
 			if (!((static_cast<int>(ID[i]) - 48) <= 9))
 			{
 			    firstChar = true;
