@@ -12,8 +12,8 @@ int main()
 	string lastName;
 	string ID;
 	bool inputDone = false;
-	bool Numbers = true;
-	bool firstChar = true;
+	bool Numbers = false;
+	bool firstChar = false;
 
 	//getting user
 	for (; !(inputDone);)
