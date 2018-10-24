@@ -11,6 +11,7 @@ int main()
 	string lastName;
 	string ID;
 	bool inputDone = false;
+	srand(time(0));
 
 	//getting user
 	for (; !(inputDone);)
