@@ -16,7 +16,7 @@ int main()
 		cin >> firstName >> lastName >> ID;
 		
 		//checking for last 5 numbers in the string
-		for (int i = 2; i <= static_cast<int>(ID.length()); i++){
+		for (int i = 1; i <= static_cast<int>(ID.length() - 1); i++){
 			if (static_cast<int>(ID[i]) <= 9 || static_cast<int>(ID[i]) >= 0)
 			inputDone = false;
 		}
