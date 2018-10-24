@@ -14,6 +14,8 @@ int main()
 	{
 		cout << "Please enter Firstname, Lastname and ID" << endl;
 		cin >> firstName >> lastName >> ID;
+		
+		//checking for last 5 numbers in the string
 		for (int i = 2; i <= static_cast<int>(ID.length()); i++){
 			if (static_cast<int>(ID[i]) <= 9 || static_cast<int>(ID[i]) >= 0)
 			inputDone = false;
