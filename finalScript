@@ -9,6 +9,11 @@ int main()
 	bool inputDone;
 	do {
 		cout << "Please enter Firstname and Lastname" << endl;
+		
+		for (int i = 1; ID.length; i++)
+			if (ID[i] == 1 || ID[i] == 2 || ID[i] == 3 || ID[i] == 4 || ID[i] == 5 || ID[i] == 6 || ID[i] == 7 || ID[i] == 8 || ID[i] == 9 || ID[i] == 0)
+				inputDone = false;
+				
 	} while (inputDone);
 	cin >> firstName >> lastName >> ID;
 
