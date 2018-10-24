@@ -7,7 +7,7 @@ int main()
 	string firstName;
 	string lastName;
 	string ID;
-	bool inputDone = true;
+	bool inputDone = false;
 
 	//getting user
 	for (; !(inputDone);)
