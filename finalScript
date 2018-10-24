@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <string>
 #include <ctime>
@@ -11,7 +12,6 @@ int main()
 	string lastName;
 	string ID;
 	bool inputDone = false;
-	srand(time(0));
 
 	//getting user
 	for (; !(inputDone);)
@@ -19,14 +19,15 @@ int main()
 		cout << "Please enter Firstname, Lastname and ID" << endl;
 		cin >> firstName >> lastName >> ID;
 		
-		//checking if first character is 'A'
-		if (static_cast<char>(ID[0]) == 'A')
-			inputDone = false;
-		
+		cout << static_cast<char>(ID[0]) << endl;
 		//checks for last 5 as numbers
 		for (int i = 1; i <= static_cast<int>(ID.length() - 1); i++){
 			if ((static_cast<int>(ID[i]) - 49) <= 9)
-			inputDone = false;
+			    inputDone = false;
+			
+			//checking if first character is 'A'
+		    else if (static_cast<char>(ID[0]) != 'A')
+			    inputDone = false;
 		}
 		
 	}
