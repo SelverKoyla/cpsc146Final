@@ -10,12 +10,17 @@ int main()
 	bool inputDone = true;
 
 	//getting user
-	for (; inputDone;)
+	for (; !(inputDone);)
 	{
 		cout << "Please enter Firstname, Lastname and ID" << endl;
 		cin >> firstName >> lastName >> ID;
-		if (static_cast<char>(ID[0])=='A')
-		for (int i = 2; i <= static_cast<int>(ID.length()); i++){
+		
+		//checking if first character is 'A'
+		if (static_cast<char>(ID[0]) == 'A')
+			inputDone = false;
+		
+		//checks for last 5 as numbers
+		for (int i = 1; i <= static_cast<int>(ID.length() - 1); i++){
 			if (static_cast<int>(ID[i]) <= 9 || static_cast<int>(ID[i]) >= 0)
 			inputDone = false;
 		}
