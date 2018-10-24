@@ -14,8 +14,10 @@ int main()
 	{
 		cin >> firstName >> lastName >> ID;
 		for (int i = 1; ID.length(); i++)
-			if {(static_cast<int>(ID[i]) <= 9 || static_cast<int>(ID[i]) >= 0)}
+		{
+			if ((!static_cast<int>(ID[i]) <= 9) || !(static_cast<int>(ID[i]) >= 0))
 				inputDone = false;
+		}
 		cout << "Check " << endl;
 	}
 
