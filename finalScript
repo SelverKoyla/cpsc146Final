@@ -6,7 +6,7 @@ int main()
 	string firstName;
 	string lastName;
 	string ID;
-	bool inputDone = false;
+	bool inputDone = true;
 	do {
 		cout << "Please enter Firstname and Lastname" << endl;
 		cin >> firstName >> lastName >> ID;
