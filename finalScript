@@ -23,11 +23,11 @@ int main()
 		//checks for last 5 as numbers
 		for (int i = 1; i <= static_cast<int>(ID.length() - 1); i++){
 			if ((static_cast<int>(ID[i]) - 49) <= 9)
-			    inputDone = false;
+				inputDone = false;
 			
 			//checking if first character is 'A'
-		    else if (static_cast<char>(ID[0]) != 'A')
-			    inputDone = false;
+		    	else if (static_cast<char>(ID[0]) != 'A')
+				inputDone = false;
 		}
 		
 	}
