@@ -6,7 +6,10 @@ int main()
 	string firstName;
 	string lastName;
 	string ID;
-	do { cout << "Please enter Firstname and Lastname" << endl; }
-	
+	bool inputDone;
+	do {
+		cout << "Please enter Firstname and Lastname" << endl;
+	} while (inputDone);
+
 	return 0;
 }
