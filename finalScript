@@ -9,6 +9,7 @@ using namespace std;
 void userID();
 int main()
 {
+	numQuestions = 10;
 	srand (time (0));
 	cout << rand () << endl;
 	cout << rand () << endl;
