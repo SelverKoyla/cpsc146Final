@@ -3,7 +3,7 @@
 #include <string>
 #include <ctime>
 #include <cstdlib>
-#include <ifstream>
+#include <fstream>
 using namespace std;
 
 int main()
@@ -52,6 +52,7 @@ int main()
 		exit(0);
 		}
 	}
+	
 	system("PAUSE");
 	return 0;
 }
