@@ -1,0 +1,17 @@
+/*Cout for score, time, student, questions asked and answered, and a future check for the characters s or q*/
+
+cout <<"Student: " /*Insert Future First Name String*/ << /*Insert Last Name String*/ endl;
+
+cout << "Score: "/*Insert The Score Integer Here*/ << endl;
+
+cout << "Time Elapsed: " << /*Insert Time Variable Here*/ << endl;
+
+cout << "Questions Archived: " << /*Insert QnA Arrays Here*/ << endl;
+
+cout << "Please enter 's' to restart or 'q' to quit" <<endl;
+cin >> choice;
+
+if (choice == "q") {
+	exit(0);
+}
+else {//Insert Future function for Looping and restart here, make sure to check for the character 's'.}
