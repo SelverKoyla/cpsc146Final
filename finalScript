@@ -7,21 +7,9 @@
 using namespace std;
 
 void userID();
+int questionReading();
 int main()
 {
-	numQuestions = 10;
-	srand (time (0));
-	cout << rand () << endl;
-	cout << rand () << endl;
-	cout << rand () << endl;
-	cout << rand () << endl;
-	cout << rand () << endl;
-	cout << rand () << endl;
-	cout << rand () << endl;
-	cout << rand () << endl;
-	cout << rand () << endl;
-	cout << rand () << endl;
-	system("PAUSE");
 	return 0;
 }
 
@@ -69,4 +57,55 @@ void userID()
 		}
 	}
 	system("PAUSE");
+}
+
+int questionReading()
+{
+	srand(time(0));
+
+	//declaring variables
+	fstream myFile;
+	string question;
+	const int numQuestions = 10;
+	bool done = false;
+
+
+	
+	//outputting numQuestions amount of questions
+	for (int i = 0; i < numQuestions; i++)
+	{
+		//getting random question number
+		int rando;
+		rando = rand() % 100 + 1;
+
+		//opening text file
+		myFile.open("questions.txt");
+
+		//go through myFile one line at a time until we get to the randNum line
+		while (myFile)
+		{
+			for (int h = 0; h <= randNum; h++)
+			{
+				if (h == randNum && done == false)
+				{
+					//output question
+					getline(myFile, question);
+					cout << question << endl;
+					done = true;
+				}
+
+				//advance one line
+				getline(myFile, question);
+				question = "";
+			}
+		}
+
+		done = false;
+
+		//close text file so getline restarts at line 1
+		myFile.close();
+	}
+
+	system("PAUSE");
+	return 0;
 }
