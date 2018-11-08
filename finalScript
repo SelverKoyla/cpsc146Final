@@ -17,7 +17,7 @@ int main()
 	bool numbers = false;
 
 	//getting user
-	while ( !(inputDone))
+	for (int num_attempts; !(inputDone))
 	{
 	    	inputDone = true;
 	    
@@ -47,7 +47,9 @@ int main()
 		    inputDone = false;
 		
 	}
-
+		if (num_attempts > 3)
+		{cout << "Exit the Program" << endl;
+	}
 	system("PAUSE");
 	return 0;
 }
