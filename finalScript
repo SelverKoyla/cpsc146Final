@@ -17,7 +17,7 @@ int main()
 	bool numbers = false;
 
 	//getting user
-	for (int num_attempts; !(inputDone))
+	for (num_attempts; !(inputDone); num_attempts++)
 	{
 	    	inputDone = true;
 	    
@@ -48,7 +48,8 @@ int main()
 		
 	}
 		if (num_attempts > 3)
-		{cout << "Exit the Program" << endl;
+	{
+		cout << "Exit the Program" << endl;
 	}
 	system("PAUSE");
 	return 0;
