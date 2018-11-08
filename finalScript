@@ -17,7 +17,7 @@ int main()
 	bool numbers = false;
 
 	//getting user
-	for (num_attempts; !(inputDone); num_attempts++)
+	for (int num_attempts; !(inputDone); num_attempts++)
 	{
 	    	inputDone = true;
 	    
@@ -45,11 +45,12 @@ int main()
 		
 		if (firstChar || numbers)
 		    inputDone = false;
-		
-	}
+		    
 		if (num_attempts > 3)
-	{
-		cout << "Exit the Program" << endl;
+		{
+		cout << "You failed to enter correct information" << endl;
+		exit(0);
+		}
 	}
 	system("PAUSE");
 	return 0;
