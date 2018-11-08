@@ -16,7 +16,7 @@ int main()
 	bool numbers = false;
 
 	//getting user
-	for (; !(inputDone);)
+	while ( !(inputDone))
 	{
 	    	inputDone = true;
 	    
