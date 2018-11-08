@@ -6,56 +6,9 @@
 #include <fstream>
 using namespace std;
 
+void userID();
 int main()
 {
-	//declaring variables
-	string firstName;
-	string lastName;
-	string ID;
-	bool inputDone = false;
-	bool firstChar = false;
-	bool numbers = false;
-
-	//getting user
-	for (int num_attempts; !(inputDone); num_attempts++)
-	{
-	    	inputDone = true;
-	    
-	    
-		cout << "Please enter Firstname, Lastname and ID" << endl;
-		cin >> firstName >> lastName >> ID;
-		
-		
-		//checks for last 5 as numbers
-		for (int i = 1; i <= static_cast<int>(ID.length() - 1); i++)
-		{
-			if (!((static_cast<int>(ID[i]) - 48) <= 9))
-			{
-			    firstChar = true;
-			}
-
-		
-		//checking if first character is 'A'
-		if (ID[0] != 'A')
-			{
-			    numbers = true;
-			}
-		}
-		
-		
-		if (firstChar || numbers)
-		    inputDone = false;
-		    
-		if (num_attempts > 3)
-		{
-		cout << "You failed to enter correct information" << endl;
-		exit(0);
-		}
-	}
-	
-	
-	
-	
 	srand (time (0));
 	cout << rand () << endl;
 	cout << rand () << endl;
@@ -69,4 +22,50 @@ int main()
 	cout << rand () << endl;
 	system("PAUSE");
 	return 0;
+}
+
+void userID()
+{
+	//declaring variables
+	static string firstName;
+	static string lastName;
+	static string ID;
+	bool inputDone = false;
+
+	//getting user
+	for (int g = 0; !(inputDone); g++)
+	{
+		inputDone = true;
+
+
+		cout << "Please enter Firstname, Lastname and ID" << endl;
+		cin >> firstName >> lastName >> ID;
+
+
+		//checks for last 5 as numbers
+		for (int i = 1; i < 6; i++)
+		{
+			if (!(ID[i] - 48 <= 9))
+			{
+				inputDone = false;
+			} 
+			else if (ID.length() < 6)
+			{
+				inputDone = false;
+			}
+		}
+
+			//checking if first character is 'A'
+			if (ID[0] != 'A')
+			{
+				inputDone = false;
+			}
+
+		if (g > 3)
+		{
+			cout << "You failed to enter correct information" << endl;
+			exit(0);
+		}
+	}
+	system("PAUSE");
 }
