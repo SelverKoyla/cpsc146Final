@@ -81,12 +81,12 @@ int questionReading()
 		//opening text file
 		myFile.open("questions.txt");
 
-		//go through myFile one line at a time until we get to the randNum line
+		//go through myFile one line at a time until we get to the rando line
 		while (myFile)
 		{
-			for (int h = 0; h <= randNum; h++)
+			for (int h = 0; h <= rando; h++)
 			{
-				if (h == randNum && done == false)
+				if (h == rando && done == false)
 				{
 					//output question
 					getline(myFile, question);
