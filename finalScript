@@ -12,6 +12,7 @@ int questionReading();
 int main()
 {
 	srand(time(0));
+	cout << score;
 	return 0;
 }
 
@@ -87,25 +88,38 @@ int questionReading()
 	//Asking questions
 	for (int i = 0; i < numQuestions; i++)
 	{
+		bool finished;
 		int rando = rand() % 100;
-		cout << questions[rando] << endl;
-		cin >> input;
-		
-	{
-	string input = "";
-    
-	if (input == "True" || input == "true" || input == "T" || input == "t")
-   	{}
-	else if (input == "False" || input == "false" || input == "F" || input == "f")
-  	{}
-	else {
-		cout << "Please enter a valid response" << endl;
-		}
-	
+
+		do {
+			cout << questions[rando] << endl;
+			finished = false;
+			cin >> input;
+
+			//checking if right answer
+			if (input == "True" || input == "true" || input == "T" || input == "t")
+			{
+				if (answers[rando] == "TRUE")
+				{
+					score++;
+				}
+				finished = true;
+			}
+			else if (input == "False" || input == "false" || input == "F" || input == "f")
+			{
+				if (answers[rando] == "FALSE")
+				{
+					score++;
+				}
+				finished = true;
+			}
+			else
+			{
+				cout << "Please enter a valid response" << endl;
+			}
+		} while (!(finished));
 	}
 	
-
 	system("PAUSE");
-	return 0;
+	return score;
 }
-
