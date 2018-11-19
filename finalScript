@@ -90,8 +90,20 @@ int questionReading()
 		int rando = rand() % 100;
 		cout << questions[rando] << endl;
 		cin >> input;
-		/////////////////////////////////
+		
+	{
+	string input = "";
+    
+	if (input == "True" || input == "true" || input == "T" || input == "t")
+   	{}
+	else if (input == "False" || input == "false" || input == "F" || input == "f")
+  	{}
+	else {
+		cout << "Please enter a valid response" << endl;
+		}
+	
 	}
+	
 
 	system("PAUSE");
 	return 0;
