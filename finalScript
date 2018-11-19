@@ -8,6 +8,7 @@ using namespace std;
 
 void userID();
 int questionReading();
+
 int main()
 {
 	srand(time(0));
@@ -58,5 +59,41 @@ void userID()
 		}
 	}
 	system("PAUSE");
+}
+
+int questionReading()
+{
+	//declaring variables
+	string questions[100];
+	string answers[100];
+	ifstream myFile;
+	string input;
+	int numQuestions = 10;
+	bool done = false;
+	int score = 0;
+
+	//opening questions file
+	myFile.open("questions.txt");
+	for (int i = 0; i < 100; i++)
+		getline(myFile, questions[i]);
+	myFile.close();
+
+	//opening answers file
+	myFile.open("answers.txt");
+	for (int i = 0; i < 100; i++)
+		getline(myFile, answers[i]);
+	myFile.close();
+
+	//Asking questions
+	for (int i = 0; i < numQuestions; i++)
+	{
+		int rando = rand() % 100;
+		cout << questions[rando] << endl;
+		cin >> input;
+		/////////////////////////////////
+	}
+
+	system("PAUSE");
+	return 0;
 }
 
