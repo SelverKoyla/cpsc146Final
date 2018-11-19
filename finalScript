@@ -10,6 +10,7 @@ void userID();
 int questionReading();
 int main()
 {
+	srand(time(0));
 	return 0;
 }
 
@@ -61,8 +62,6 @@ void userID()
 
 int questionReading()
 {
-	srand(time(0));
-
 	//declaring variables
 	fstream myFile;
 	string question;
