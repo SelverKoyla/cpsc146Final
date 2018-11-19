@@ -1,4 +1,4 @@
-/*Cout for score, time, student, questions asked and answered, and a future check for the characters s or q*/
+ /*Cout for score, time, student, questions asked and answered, and a future check for the characters s or q*/
 
 cout <<"Student: " /*Insert Future First Name String*/ << /*Insert Last Name String*/ endl;
 
@@ -14,4 +14,7 @@ cin >> choice;
 if (choice == "q") {
 	exit(0);
 }
-else {//Insert Future function for Looping and restart here, make sure to check for the character 's'.}
+else if (choice == "s"){/*insert loop for restart here*/}
+else{cout << "Please input a valid response (Q to quit or S to Restart)" <<endl};
+system ("PAUSE");
+return 0;}
