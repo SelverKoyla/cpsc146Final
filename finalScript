@@ -183,6 +183,8 @@ int Unique_Question(int numQuestions)
 
 bool finalScreen(int testScore, int testTime, int numQuestions, string fName, string lName)
 {
+	cout << "check\n";
+	system("PAUSE");
 	char choice;
 	ifstream myFile;
 	string questions[100];
@@ -213,7 +215,7 @@ bool finalScreen(int testScore, int testTime, int numQuestions, string fName, st
 
 	cout << "Time Elapsed: " << testTime << " seconds" << endl;
 
-	for (int i = 1; i <= (numQuestions - testScore); i++)
+	for (int i = 1; i < (numQuestions - testScore); i++)
 	{
 		cout << "Question Archived number " << i << ": " << questions[wrongQuestions[i]] << endl;
 		cout << "You said: ";
