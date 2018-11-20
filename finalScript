@@ -6,33 +6,51 @@
 #include <fstream>
 using namespace std;
 
-string userID();
-int questionReading(int);
-bool finalScreen(int, int, int, string, string, string);
+void Validate_ID();
+int Unique_Question(int);
+bool finalScreen(int, int, int, string, string);
 string firstName, lastName;
 int main()
 {
-int numQuestions;
-
-	cout << "Do you want to take the 10 Question quiz or the 20 Question Quiz? " << endl;
-	cin >> numQuestions;
+	srand(time(0));
 	bool restart;
+	int numQuestions;
+	bool notValid;
+
 	do
 	{
-		srand(time(0));
+		system("CLS");
+		//get how many questions you want to do
+		do
+		{
+			notValid = false;
+			cout << "Do you want to take the 10 Question quiz or the 20 Question Quiz? " << endl;
+			cin >> numQuestions;
+			if (!(numQuestions == 10 || numQuestions == 20))
+			{
+				notValid = true;
+				cout << "Please enter 10 or 20\n";
+			}
+		} while (notValid);
+
+		//get initial time
 		int startTime = time(0);
 
-		string ID = userID();
-		
-		int score = questionReading(10);
-		restart = finalScreen(score, time(0) - startTime, 10, ::firstName, ::lastName, ID);
+		//run user identification function
+		Validate_ID();
+
+		//ask questions and get total score
+		int score = Unique_Question(numQuestions);
+
+		//print final screen and potentially restart
+		restart = finalScreen(score, time(0) - startTime, numQuestions, ::firstName, ::lastName);
 
 		system("PAUSE");
 	} while (restart);
 	return 0;
 }
 
-string userID()
+void Validate_ID()
 {
 	//declaring variables
 	static string ID;
@@ -74,11 +92,9 @@ string userID()
 		}
 	}
 	cout << endl;
-	
-	return ID;
 }
 
-int questionReading(int numQuestions)
+int Unique_Question(int numQuestions)
 {
 	//declaring variables
 	string questions[100];
@@ -110,6 +126,7 @@ int questionReading(int numQuestions)
 		bool noRe;
 		int rando;
 
+
 		do {
 			noRe = true;
 			rando = rand() % 100;
@@ -121,7 +138,7 @@ int questionReading(int numQuestions)
 		} while (!noRe);
 
 		askedQuestions[i] = rando;
-		
+
 		do {
 			cout << questions[rando] << endl;
 			finished = false;
@@ -164,7 +181,7 @@ int questionReading(int numQuestions)
 	return score;
 }
 
-bool finalScreen(int testScore, int testTime, int numQuestions, string fName, string lName, string Id)
+bool finalScreen(int testScore, int testTime, int numQuestions, string fName, string lName)
 {
 	char choice;
 	ifstream myFile;
@@ -173,32 +190,30 @@ bool finalScreen(int testScore, int testTime, int numQuestions, string fName, st
 	int wrongQuestions[20];
 	bool restart;
 
-	{
-		//opening questions file
-		myFile.open("questions.txt");
-		for (int i = 0; i < 100; i++)
-			getline(myFile, questions[i]);
-		myFile.close();
+	//opening questions file
+	myFile.open("questions.txt");
+	for (int i = 0; i < 100; i++)
+		getline(myFile, questions[i]);
+	myFile.close();
 
-		//opening answers file
-		myFile.open("answers.txt");
-		for (int i = 0; i < 100; i++)
-			getline(myFile, answers[i]);
-		myFile.close();
+	//opening answers file
+	myFile.open("answers.txt");
+	for (int i = 0; i < 100; i++)
+		getline(myFile, answers[i]);
+	myFile.close();
 
-		myFile.open("Wrong Numbers.txt");
-		for (int i = 0; i < numQuestions; i++)
-			myFile >> wrongQuestions[i];
-		myFile.close();
-	}
+	myFile.open("Wrong Numbers.txt");
+	for (int i = 0; i < numQuestions; i++)
+		myFile >> wrongQuestions[i];
+	myFile.close();
 
-	cout << "Student: " << fName << " " << lName << " ID: " << Id << endl;
+	cout << "Student: " << fName << " " << lName << endl;
 
 	cout << "Score: " << testScore << endl;
 
 	cout << "Time Elapsed: " << testTime << " seconds" << endl;
 
-	for (int i = 0; i < (numQuestions - testScore); i++)
+	for (int i = 1; i <= (numQuestions - testScore); i++)
 	{
 		cout << "Question Archived number " << i << ": " << questions[wrongQuestions[i]] << endl;
 		cout << "You said: ";
@@ -208,20 +223,27 @@ bool finalScreen(int testScore, int testTime, int numQuestions, string fName, st
 		((answers[wrongQuestions[i]] == "TRUE") ? (cout << "True\n\n") : (cout << "False\n\n"));
 	}
 
-	cout << "Please enter 'r' to restart or 'q' to quit" << endl;
-	cin >> choice;
+	bool notValid;
+	do
+	{
+		notValid = false;
 
-	if (choice == 'q')
-	{
-		restart = false;
-	}
-	else if (choice == 'r')
-	{
-		restart = true;
-	}
-	else
-	{
-		cout << "Please input a valid response (q to quit or r to Restart)" << endl;
-	}
+		cout << "Please enter 'r' to restart or 'q' to quit" << endl;
+		cin >> choice;
+
+		if (choice == 'q')
+		{
+			restart = false;
+		}
+		else if (choice == 'r')
+		{
+			restart = true;
+		}
+		else
+		{
+			cout << "Please input a valid response (q to quit or r to Restart)\n" << endl;
+			notValid = true;
+		}
+	} while (notValid);
 	return restart;
 }
