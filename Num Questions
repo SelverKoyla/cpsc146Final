@@ -1,0 +1,4 @@
+int numQuestions;
+
+cout << "Do you want to take the 10 Question quiz or the 20 Question Quiz? " << endl;
+cin >> numQuestions;
