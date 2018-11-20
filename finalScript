@@ -6,21 +6,31 @@
 #include <fstream>
 using namespace std;
 
-void userID();
-int questionReading();
-
+string userID();
+int questionReading(int);
+bool finalScreen(int, int, int, string, string, string);
+string firstName, lastName;
 int main()
 {
-	srand(time(0));
-	cout << score;
+	bool restart;
+	do
+	{
+		srand(time(0));
+		int startTime = time(0);
+
+		string ID = userID();
+		
+		int score = questionReading(10);
+		restart = finalScreen(score, time(0) - startTime, 10, ::firstName, ::lastName, ID);
+
+		system("PAUSE");
+	} while (restart);
 	return 0;
 }
 
-void userID()
+string userID()
 {
 	//declaring variables
-	static string firstName;
-	static string lastName;
 	static string ID;
 	bool inputDone = false;
 
@@ -31,7 +41,7 @@ void userID()
 
 
 		cout << "Please enter Firstname, Lastname and ID" << endl;
-		cin >> firstName >> lastName >> ID;
+		cin >> ::firstName >> ::lastName >> ID;
 
 
 		//checks for last 5 as numbers
@@ -40,18 +50,18 @@ void userID()
 			if (!(ID[i] - 48 <= 9))
 			{
 				inputDone = false;
-			} 
+			}
 			else if (ID.length() < 6)
 			{
 				inputDone = false;
 			}
 		}
 
-			//checking if first character is 'A'
-			if (ID[0] != 'A')
-			{
-				inputDone = false;
-			}
+		//checking if first character is 'A'
+		if (ID[0] != 'A')
+		{
+			inputDone = false;
+		}
 
 		if (g > 3)
 		{
@@ -59,17 +69,20 @@ void userID()
 			exit(0);
 		}
 	}
-	system("PAUSE");
+	cout << endl;
+	
+	return ID;
 }
 
-int questionReading()
+int questionReading(int numQuestions)
 {
 	//declaring variables
 	string questions[100];
 	string answers[100];
 	ifstream myFile;
+	ofstream wrongNum;
+	int askedQuestions[20];
 	string input;
-	int numQuestions = 10;
 	bool done = false;
 	int score = 0;
 
@@ -85,16 +98,31 @@ int questionReading()
 		getline(myFile, answers[i]);
 	myFile.close();
 
+	wrongNum.open("Wrong Numbers.txt");
 	//Asking questions
 	for (int i = 0; i < numQuestions; i++)
 	{
 		bool finished;
-		int rando = rand() % 100;
+		bool noRe;
+		int rando;
 
+		do {
+			noRe = true;
+			rando = rand() % 100;
+			for (int h = 0; h < numQuestions; h++)
+			{
+				if (rando == askedQuestions[h])
+					noRe = false;
+			}
+		} while (!noRe);
+
+		askedQuestions[i] = rando;
+		
 		do {
 			cout << questions[rando] << endl;
 			finished = false;
 			cin >> input;
+			cout << endl;
 
 			//checking if right answer
 			if (input == "True" || input == "true" || input == "T" || input == "t")
@@ -102,6 +130,10 @@ int questionReading()
 				if (answers[rando] == "TRUE")
 				{
 					score++;
+				}
+				else
+				{
+					wrongNum << rando << endl;
 				}
 				finished = true;
 			}
@@ -111,6 +143,10 @@ int questionReading()
 				{
 					score++;
 				}
+				else
+				{
+					wrongNum << rando << endl;
+				}
 				finished = true;
 			}
 			else
@@ -119,7 +155,69 @@ int questionReading()
 			}
 		} while (!(finished));
 	}
-	
-	system("PAUSE");
+	wrongNum.close();
+	cout << endl;
 	return score;
+}
+
+bool finalScreen(int testScore, int testTime, int numQuestions, string fName, string lName, string Id)
+{
+	char choice;
+	ifstream myFile;
+	string questions[100];
+	string answers[100];
+	int wrongQuestions[20];
+	bool restart;
+
+	{
+		//opening questions file
+		myFile.open("questions.txt");
+		for (int i = 0; i < 100; i++)
+			getline(myFile, questions[i]);
+		myFile.close();
+
+		//opening answers file
+		myFile.open("answers.txt");
+		for (int i = 0; i < 100; i++)
+			getline(myFile, answers[i]);
+		myFile.close();
+
+		myFile.open("Wrong Numbers.txt");
+		for (int i = 0; i < numQuestions; i++)
+			myFile >> wrongQuestions[i];
+		myFile.close();
+	}
+
+	cout << "Student: " << fName << " " << lName << " ID: " << Id << endl;
+
+	cout << "Score: " << testScore << endl;
+
+	cout << "Time Elapsed: " << testTime << " seconds" << endl;
+
+	for (int i = 0; i < (numQuestions - testScore); i++)
+	{
+		cout << "Question Archived number " << i << ": " << questions[wrongQuestions[i]] << endl;
+		cout << "You said: ";
+		((answers[wrongQuestions[i]] == "TRUE") ? (cout << "False\n") : (cout << "True\n"));
+
+		cout << "While the correct answer was: ";
+		((answers[wrongQuestions[i]] == "TRUE") ? (cout << "True\n\n") : (cout << "False\n\n"));
+	}
+
+	cout << "Please enter 'r' to restart or 'q' to quit" << endl;
+	cin >> choice;
+
+	if (choice == 'q')
+	{
+		restart = false;
+	}
+	else if (choice == 'r')
+	{
+		restart = true;
+	}
+	else
+	{
+		cout << "Please input a valid response (q to quit or r to Restart)" << endl;
+	}
+	return restart;
 }
