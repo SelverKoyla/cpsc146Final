@@ -1,20 +1,223 @@
- /*Cout for score, time, student, questions asked and answered, and a future check for the characters s or q*/
 
-cout <<"Student: " /*Insert Future First Name String*/ << /*Insert Last Name String*/ endl;
+#include <iostream>
+#include <string>
+#include <ctime>
+#include <cstdlib>
+#include <fstream>
+using namespace std;
 
-cout << "Score: "/*Insert The Score Integer Here*/ << endl;
+string userID();
+int questionReading(int);
+bool finalScreen(int, int, int, string, string, string);
+string firstName, lastName;
+int main()
+{
+	bool restart;
+	do
+	{
+		srand(time(0));
+		int startTime = time(0);
 
-cout << "Time Elapsed: " << /*Insert Time Variable Here*/ << endl;
+		string ID = userID();
+		
+		int score = questionReading(10);
+		restart = finalScreen(score, time(0) - startTime, 10, ::firstName, ::lastName, ID);
 
-cout << "Questions Archived: " << /*Insert QnA Arrays Here*/ << endl;
-
-cout << "Please enter 's' to restart or 'q' to quit" <<endl;
-cin >> choice;
-
-if (choice == "q") {
-	exit(0);
+		system("PAUSE");
+	} while (restart);
+	return 0;
 }
-else if (choice == "s"){/*insert loop for restart here*/}
-else{cout << "Please input a valid response (Q to quit or S to Restart)" <<endl};
-system ("PAUSE");
-return 0;}
+
+string userID()
+{
+	//declaring variables
+	static string ID;
+	bool inputDone = false;
+
+	//getting user
+	for (int g = 0; !(inputDone); g++)
+	{
+		inputDone = true;
+
+
+		cout << "Please enter Firstname, Lastname and ID" << endl;
+		cin >> ::firstName >> ::lastName >> ID;
+
+
+		//checks for last 5 as numbers
+		for (int i = 1; i < 6; i++)
+		{
+			if (!(ID[i] - 48 <= 9))
+			{
+				inputDone = false;
+			}
+			else if (ID.length() < 6)
+			{
+				inputDone = false;
+			}
+		}
+
+		//checking if first character is 'A'
+		if (ID[0] != 'A')
+		{
+			inputDone = false;
+		}
+
+		if (g > 3)
+		{
+			cout << "You failed to enter correct information" << endl;
+			exit(0);
+		}
+	}
+	cout << endl;
+	
+	return ID;
+}
+
+int questionReading(int numQuestions)
+{
+	//declaring variables
+	string questions[100];
+	string answers[100];
+	ifstream myFile;
+	ofstream wrongNum;
+	int askedQuestions[20];
+	string input;
+	bool done = false;
+	int score = 0;
+
+	//opening questions file
+	myFile.open("questions.txt");
+	for (int i = 0; i < 100; i++)
+		getline(myFile, questions[i]);
+	myFile.close();
+
+	//opening answers file
+	myFile.open("answers.txt");
+	for (int i = 0; i < 100; i++)
+		getline(myFile, answers[i]);
+	myFile.close();
+
+	wrongNum.open("Wrong Numbers.txt");
+	//Asking questions
+	for (int i = 0; i < numQuestions; i++)
+	{
+		bool finished;
+		bool noRe;
+		int rando;
+
+		do {
+			noRe = true;
+			rando = rand() % 100;
+			for (int h = 0; h < numQuestions; h++)
+			{
+				if (rando == askedQuestions[h])
+					noRe = false;
+			}
+		} while (!noRe);
+
+		askedQuestions[i] = rando;
+		
+		do {
+			cout << questions[rando] << endl;
+			finished = false;
+			cin >> input;
+			cout << endl;
+
+			//checking if right answer
+			if (input == "True" || input == "true" || input == "T" || input == "t")
+			{
+				if (answers[rando] == "TRUE")
+				{
+					score++;
+				}
+				else
+				{
+					wrongNum << rando << endl;
+				}
+				finished = true;
+			}
+			else if (input == "False" || input == "false" || input == "F" || input == "f")
+			{
+				if (answers[rando] == "FALSE")
+				{
+					score++;
+				}
+				else
+				{
+					wrongNum << rando << endl;
+				}
+				finished = true;
+			}
+			else
+			{
+				cout << "Please enter a valid response" << endl;
+			}
+		} while (!(finished));
+	}
+	wrongNum.close();
+	cout << endl;
+	return score;
+}
+
+bool finalScreen(int testScore, int testTime, int numQuestions, string fName, string lName, string Id)
+{
+	char choice;
+	ifstream myFile;
+	string questions[100];
+	string answers[100];
+	int wrongQuestions[20];
+	bool restart;
+
+	{
+		//opening questions file
+		myFile.open("questions.txt");
+		for (int i = 0; i < 100; i++)
+			getline(myFile, questions[i]);
+		myFile.close();
+
+		//opening answers file
+		myFile.open("answers.txt");
+		for (int i = 0; i < 100; i++)
+			getline(myFile, answers[i]);
+		myFile.close();
+
+		myFile.open("Wrong Numbers.txt");
+		for (int i = 0; i < numQuestions; i++)
+			myFile >> wrongQuestions[i];
+		myFile.close();
+	}
+
+	cout << "Student: " << fName << " " << lName << " ID: " << Id << endl;
+
+	cout << "Score: " << testScore << endl;
+
+	cout << "Time Elapsed: " << testTime << " seconds" << endl;
+
+	for (int i = 0; i < (numQuestions - testScore); i++)
+	{
+		cout << "Question Archived number " << i << ": " << questions[wrongQuestions[i]] << endl;
+		cout << "You said: ";
+		((answers[wrongQuestions[i]] == "TRUE") ? (cout << "False\n") : (cout << "True\n"));
+
+		cout << "While the correct answer was: ";
+		((answers[wrongQuestions[i]] == "TRUE") ? (cout << "True\n\n") : (cout << "False\n\n"));
+	}
+
+	cout << "Please enter 'r' to restart or 'q' to quit" << endl;
+	cin >> choice;
+
+	if (choice == 'q')
+	{
+		restart = false;
+	}
+	else if (choice == 'r')
+	{
+		restart = true;
+	}
+	else
+	{
+		cout << "Please input a valid response (q to quit or r to Restart)" << endl;
+	}
+	return restart;
+}
