@@ -16,37 +16,48 @@ string firstName, lastName;
 
 int main()
 {
+	//ensuring randomness
 	srand(time(0));
 	bool restart = true;
 	int numQuestions;
 
+
+	//everything in a do while loop so we can restart
 	do
 	{
+		//clearing screen
 		system("CLS");
+
+
 		//get how many questions you want to do
 		cout << "Do you want to take the 10 Question quiz or the 20 Question Quiz? " << endl;
 		cin >> numQuestions;
 		if (numQuestions == 10 || numQuestions == 20) {
 
 
-
 			//get initial time
 			int startTime = time(0);
+
 
 			//run user identification function
 			Validate_ID();
 
+
 			//ask questions and get total score
 			int score = Unique_Question(numQuestions);
+
 
 			//print final screen and potentially restart
 			restart = finalScreen(score, time(0) - startTime, numQuestions, ::firstName, ::lastName);
 		}
+
+
 		system("PAUSE");
 	} while (restart);
+
+
 	return 0;
 }
-
 
 void Validate_ID()
 {
