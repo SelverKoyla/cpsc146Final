@@ -233,7 +233,7 @@ bool finalScreen(int testScore, int testTime, int numQuestions, string fName, st
 	int wrongQuestions[20];
 	bool restart;
 
-
+	//changing files into arrays
 	{
 		//opening questions file
 		myFile.open("questions.txt");
@@ -266,11 +266,16 @@ bool finalScreen(int testScore, int testTime, int numQuestions, string fName, st
 	//Simple Int Output
 	cout << "Student: " << fName << " " << lName << endl;
 
+
+	//outputting score
 	(numQuestions == 10) ? (cout << "Score: " << testScore << " / 10" << endl) : (cout << "Score: " << testScore / 2.0 << " / 10" << endl);
 
+
+	//outputting time
 	cout << "Time Elapsed: " << testTime << " seconds\n" << endl;
 
 
+	//Reviewing questions missed
 	for (int i = 0; i < (numQuestions - testScore); i++) 
 	{
 		//Outputting wrong questions and the correct errors
@@ -278,6 +283,8 @@ bool finalScreen(int testScore, int testTime, int numQuestions, string fName, st
 		cout << "You said: ";
 		((answers[wrongQuestions[i]] == "TRUE") ? (cout << "False\n") : (cout << "True\n"));
 
+
+		//outputting correct answer
 		cout << "While the correct answer was: ";
 		((answers[wrongQuestions[i]] == "TRUE") ? (cout << "True\n\n") : (cout << "False\n\n"));
 	}
@@ -289,8 +296,10 @@ bool finalScreen(int testScore, int testTime, int numQuestions, string fName, st
 	{
 		notValid = false;
 
+
 		cout << "Please enter 's' to restart or 'q' to quit" << endl;
 		cin >> choice;
+
 
 		if (choice == 'q') 
 		{
@@ -305,6 +314,8 @@ bool finalScreen(int testScore, int testTime, int numQuestions, string fName, st
 			cout << "Please input a valid response (q to quit or r to Restart)\n" << endl;
 			notValid = true;
 		}
-	} 
-	while (notValid);
+	} while (notValid);
+	
+	
 	return restart;
+}
