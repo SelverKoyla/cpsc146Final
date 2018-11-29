@@ -1,4 +1,5 @@
 
+
 #include <iostream>
 #include <string>
 #include <ctime>
@@ -13,38 +14,31 @@ string firstName, lastName;
 int main()
 {
 	srand(time(0));
-	bool restart;
+	bool restart = true;
 	int numQuestions;
-	bool notValid;
 
 	do
 	{
 		system("CLS");
 		//get how many questions you want to do
-		do
-		{
-			notValid = false;
-			cout << "Do you want to take the 10 Question quiz or the 20 Question Quiz? " << endl;
-			cin >> numQuestions;
-			if (!(numQuestions == 10 || numQuestions == 20))
-			{
-				notValid = true;
-				cout << "Please enter 10 or 20\n";
-			}
-		} while (notValid);
+		cout << "Do you want to take the 10 Question quiz or the 20 Question Quiz? " << endl;
+		cin >> numQuestions;
+		if (numQuestions == 10 || numQuestions == 20) {
 
-		//get initial time
-		int startTime = time(0);
 
-		//run user identification function
-		Validate_ID();
 
-		//ask questions and get total score
-		int score = Unique_Question(numQuestions);
+			//get initial time
+			int startTime = time(0);
 
-		//print final screen and potentially restart
-		restart = finalScreen(score, time(0) - startTime, numQuestions, ::firstName, ::lastName);
+			//run user identification function
+			Validate_ID();
 
+			//ask questions and get total score
+			int score = Unique_Question(numQuestions);
+
+			//print final screen and potentially restart
+			restart = finalScreen(score, time(0) - startTime, numQuestions, ::firstName, ::lastName);
+		}
 		system("PAUSE");
 	} while (restart);
 	return 0;
@@ -57,23 +51,24 @@ void Validate_ID()
 	bool inputDone = false;
 
 	//getting user
-	for (int g = 0; !(inputDone); g++)
+	for (int g = 1; !(inputDone); g++)
 	{
 		inputDone = true;
 
 
+		//getting name and ID
 		cout << "Please enter Firstname, Lastname and ID" << endl;
 		cin >> ::firstName >> ::lastName >> ID;
+		
 
-
-		//checks for last 5 as numbers
+		//checks for last 5 as numbers and if ID is 6 characters
 		for (int i = 1; i < 6; i++)
 		{
-			if (!(ID[i] - 48 <= 9))
+			if (ID.length() != 6)
 			{
 				inputDone = false;
 			}
-			else if (ID.length() < 6)
+			else if (!(ID[i] - 48 <= 9 && ID[i] >= 1))
 			{
 				inputDone = false;
 			}
@@ -85,9 +80,10 @@ void Validate_ID()
 			inputDone = false;
 		}
 
-		if (g > 3)
+		if (g >= 3)
 		{
 			cout << "You failed to enter correct information" << endl;
+			system("PAUSE");
 			exit(0);
 		}
 	}
@@ -183,8 +179,6 @@ int Unique_Question(int numQuestions)
 
 bool finalScreen(int testScore, int testTime, int numQuestions, string fName, string lName)
 {
-	cout << "check\n";
-	system("PAUSE");
 	char choice;
 	ifstream myFile;
 	string questions[100];
@@ -192,32 +186,36 @@ bool finalScreen(int testScore, int testTime, int numQuestions, string fName, st
 	int wrongQuestions[20];
 	bool restart;
 
-	//opening questions file
-	myFile.open("questions.txt");
-	for (int i = 0; i < 100; i++)
-		getline(myFile, questions[i]);
-	myFile.close();
-
-	//opening answers file
-	myFile.open("answers.txt");
-	for (int i = 0; i < 100; i++)
-		getline(myFile, answers[i]);
-	myFile.close();
-
-	myFile.open("Wrong Numbers.txt");
-	for (int i = 0; i < numQuestions; i++)
-		myFile >> wrongQuestions[i];
-	myFile.close();
-
-	cout << "Student: " << fName << " " << lName << endl;
-
-	cout << "Score: " << testScore << endl;
-
-	cout << "Time Elapsed: " << testTime << " seconds" << endl;
-
-	for (int i = 1; i < (numQuestions - testScore); i++)
 	{
-		cout << "Question Archived number " << i << ": " << questions[wrongQuestions[i]] << endl;
+		//opening questions file
+		myFile.open("questions.txt");
+		for (int i = 0; i < 100; i++)
+			getline(myFile, questions[i]);
+		myFile.close();
+
+		//opening answers file
+		myFile.open("answers.txt");
+		for (int i = 0; i < 100; i++)
+			getline(myFile, answers[i]);
+		myFile.close();
+
+		//opening file containing missed questions
+		myFile.open("Wrong Numbers.txt");
+		for (int i = 0; i < numQuestions; i++)
+			myFile >> wrongQuestions[i];
+		myFile.close();
+	}
+
+	cout << "Student: " << fName << " " << lName  << endl;
+
+	(numQuestions == 10) ? (cout << "Score: " << testScore << " / 10" << endl) : (cout << "Score: " << testScore / 2.0 << " / 10" << endl);
+
+	cout << "Time Elapsed: " << testTime << " seconds\n" << endl;
+
+	for (int i = 0; i < (numQuestions - testScore); i++)
+	{
+		//Outputting wrong questions and the correct errors
+		cout << "Question Archived number " << i + 1 << ": " << questions[wrongQuestions[i]] << endl;
 		cout << "You said: ";
 		((answers[wrongQuestions[i]] == "TRUE") ? (cout << "False\n") : (cout << "True\n"));
 
@@ -230,14 +228,14 @@ bool finalScreen(int testScore, int testTime, int numQuestions, string fName, st
 	{
 		notValid = false;
 
-		cout << "Please enter 'r' to restart or 'q' to quit" << endl;
+		cout << "Please enter 's' to restart or 'q' to quit" << endl;
 		cin >> choice;
 
 		if (choice == 'q')
 		{
 			restart = false;
 		}
-		else if (choice == 'r')
+		else if (choice == 's')
 		{
 			restart = true;
 		}
