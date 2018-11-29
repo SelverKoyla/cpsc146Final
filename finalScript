@@ -72,7 +72,7 @@ void Validate_ID()
 
 
 		//getting name and ID
-		cout << "Please enter Firstname, Lastname and ID" << endl;
+		cout << "Please enter Firstname, Lastname, and ID" << endl;
 		cin >> ::firstName >> ::lastName >> ID;
 		
 
