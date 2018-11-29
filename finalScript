@@ -7,10 +7,13 @@
 #include <fstream>
 using namespace std;
 
+
 void Validate_ID();
 int Unique_Question(int);
 bool finalScreen(int, int, int, string, string);
 string firstName, lastName;
+
+
 int main()
 {
 	srand(time(0));
@@ -43,6 +46,7 @@ int main()
 	} while (restart);
 	return 0;
 }
+
 
 void Validate_ID()
 {
@@ -90,6 +94,7 @@ void Validate_ID()
 	cout << endl;
 }
 
+
 int Unique_Question(int numQuestions)
 {
 	//declaring variables
@@ -102,19 +107,29 @@ int Unique_Question(int numQuestions)
 	bool done = false;
 	int score = 0;
 
+
 	//opening questions file
 	myFile.open("questions.txt");
 	for (int i = 0; i < 100; i++)
+	{
 		getline(myFile, questions[i]);
+	}
 	myFile.close();
+
 
 	//opening answers file
 	myFile.open("answers.txt");
 	for (int i = 0; i < 100; i++)
+	{
 		getline(myFile, answers[i]);
+	}
 	myFile.close();
 
+
+	//opening file recording missed questions
 	wrongNum.open("Wrong Numbers.txt");
+
+
 	//Asking questions
 	for (int i = 0; i < numQuestions; i++)
 	{
@@ -122,7 +137,8 @@ int Unique_Question(int numQuestions)
 		bool noRe;
 		int rando;
 
-
+		
+		//check if question has 
 		do {
 			noRe = true;
 			rando = rand() % 100;
@@ -133,17 +149,23 @@ int Unique_Question(int numQuestions)
 			}
 		} while (!noRe);
 
+		
+		//adding question id to asked question array
 		askedQuestions[i] = rando;
 
+
 		do {
+			//outputting question
 			cout << questions[rando] << endl;
 			finished = false;
 			cin >> input;
 			cout << endl;
 
-			//checking if right answer
+
+			//checking the input
 			if (input == "True" || input == "true" || input == "T" || input == "t")
 			{
+				//checking if correct input
 				if (answers[rando] == "TRUE")
 				{
 					score++;
@@ -156,6 +178,7 @@ int Unique_Question(int numQuestions)
 			}
 			else if (input == "False" || input == "false" || input == "F" || input == "f")
 			{
+				//checking if correct input
 				if (answers[rando] == "FALSE")
 				{
 					score++;
@@ -172,10 +195,14 @@ int Unique_Question(int numQuestions)
 			}
 		} while (!(finished));
 	}
+
+
+	//closing missed question file
 	wrongNum.close();
 	cout << endl;
 	return score;
 }
+
 
 bool finalScreen(int testScore, int testTime, int numQuestions, string fName, string lName)
 {
