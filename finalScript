@@ -62,16 +62,16 @@ int main()
 void Validate_ID()
 {
 
-		//declaring variables
-		static string ID;
-		bool inputDone = false;
+	//declaring variables
+	static string ID;
+	bool inputDone = false;
 
 
-		//getting user
+	//getting user
 	for (int g = 1; !(inputDone); g++)
 	{
-
 		inputDone = true;
+
 
 		//getting name and ID
 		cout << "Please enter Firstname, Lastname and ID" << endl;
@@ -98,6 +98,7 @@ void Validate_ID()
 			inputDone = false;
 		}
 
+
 		if (g >= 3)
 		{
 			cout << "You failed to enter correct information" << endl;
@@ -105,6 +106,8 @@ void Validate_ID()
 			exit(0);
 		}
 	}
+	
+	
 	cout << endl;
 }
 
@@ -125,16 +128,22 @@ int Unique_Question(int numQuestions)
 	//opening questions file
 	myFile.open("questions.txt");
 	for (int i = 0; i < 100; i++)
+	{
 		getline(myFile, questions[i]);
+	}
 	myFile.close();
 
 
 	//opening answers file
 	myFile.open("answers.txt");
 	for (int i = 0; i < 100; i++)
+	{
 		getline(myFile, answers[i]);
+	}
 	myFile.close();
 
+
+	//opening file recording missed questions
 	wrongNum.open("Wrong Numbers.txt");
 
 
@@ -145,8 +154,9 @@ int Unique_Question(int numQuestions)
 		bool noRe;
 		int rando;
 
-		do
-		{
+		
+		//check if question has 
+		do {
 			noRe = true;
 			rando = rand() % 100;
 			for (int h = 0; h < numQuestions; h++)
@@ -156,19 +166,23 @@ int Unique_Question(int numQuestions)
 			}
 		} while (!noRe);
 
+		
+		//adding question id to asked question array
 		askedQuestions[i] = rando;
 
-		do
-		{
+
+		do {
+			//outputting question
 			cout << questions[rando] << endl;
 			finished = false;
 			cin >> input;
 			cout << endl;
 
 
-			//checking if right answer
+			//checking the input
 			if (input == "True" || input == "true" || input == "T" || input == "t")
 			{
+				//checking if correct input
 				if (answers[rando] == "TRUE")
 				{
 					score++;
@@ -181,6 +195,7 @@ int Unique_Question(int numQuestions)
 			}
 			else if (input == "False" || input == "false" || input == "F" || input == "f")
 			{
+				//checking if correct input
 				if (answers[rando] == "FALSE")
 				{
 					score++;
@@ -197,6 +212,9 @@ int Unique_Question(int numQuestions)
 			}
 		} while (!(finished));
 	}
+
+
+	//closing missed question file
 	wrongNum.close();
 	cout << endl;
 	return score;
