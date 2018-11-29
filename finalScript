@@ -114,6 +114,7 @@ void Validate_ID()
 }
 
 
+//asking quesions and checking answers
 int Unique_Question(int numQuestions)
 {
 	//declaring variables
