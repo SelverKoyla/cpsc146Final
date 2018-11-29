@@ -101,7 +101,7 @@ void Validate_ID()
 		}
 
 
-		if (g >= 3)
+		if (g >= 3 && inputDone == false)
 		{
 			cout << "You failed to enter correct information" << endl;
 			system("PAUSE");
